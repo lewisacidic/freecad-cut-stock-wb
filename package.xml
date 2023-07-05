@@ -12,7 +12,7 @@
   <content>
     <workbench>
       <classname>CutStockWorkbench</classname>
-      <subdirectory>./Mod/</subdirectory>
+      <subdirectory>./</subdirectory>
       <tag>cut-stock</tag>
     </workbench>
   </content>
