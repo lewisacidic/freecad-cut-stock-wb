@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<package format="1" xmlns="https://wiki.freecad.org/Package_Metadata">
+  <name>Cut Stock Workbench</name>
+  <description>Produce and plan cut stock such as extrusions, tubes, planks and sheets.</description>
+  <version>0.0.0</version>
+  <date>2023-07-05</date>
+  <maintainer email="opensource@rpil.io">Rich Lewis</maintainer>
+  <license file="LICENSE">MIT</license>
+  <url type="repository" branch="main">https://github.com/lewisacidic/freecad-cutstock</url>
+  <url type="readme">https://github.com/lewisacidic/freecad-cutstock</url>
+  <icon>Resources/Icons/CSLogo.svg</icon>
+  <content>
+    <workbench>
+      <classname>CutStockWorkbench</classname>
+      <subdirectory>./Mod/</subdirectory>
+      <tag>cut-stock</tag>
+    </workbench>
+  </content>
+</package>
