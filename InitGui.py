@@ -1,22 +1,27 @@
 #!/usr/bin/env python
 """Base of CutStock workbench."""
-import os
+import CSUtils
 
 import FreeCAD
-from FreeCAD import Workbench, Gui
+from FreeCAD import Gui
+from FreeCAD.Gui import Workbench
 
 
-class TwoByFourCmd(object):
-    """Create a 2x4."""
+class PlankCmd:
+    """Create a Plank."""
 
     def GetResources(self):
-        return {"Pixmap": "2x4", "MenuText": "Create a 2x4", "ToolTip": "Create a 2x4"}
+        return {
+            "Pixmap": CSUtils.resource("Icon", "CSPlank.svg"),
+            "MenuText": "Create a Plank",
+            "ToolTip": "Create a Plank",
+        }
 
     def Activated(self):
-        import Box
+        import CSPlank
 
-        a = FreeCAD.ActiveDocument.addObject("Part::FeaturePython", "2x4")
-        Box.TwoByFour(a)
+        a = FreeCAD.ActiveDocument.addObject("Part::FeaturePython", "Plank")
+        CSPlank.Plank(a)
         a.ViewObject.Proxy = 0
         FreeCAD.ActiveDocument.recompute()
         return
@@ -25,22 +30,19 @@ class TwoByFourCmd(object):
         return Gui.ActiveDocument is not None
 
 
-FreeCADGui.addCommand("TwoByFour", TwoByFourCmd())
-
-
-base_path = os.path.join(os.path.dirname(__file__), "..")
-icon_path = os.path.join(base_path, "Resources", "Icons")
+Gui.addCommand("Plank", PlankCmd())
 
 
 class CutStockWorkbench(Workbench):
     """The cut stock workbench."""
 
+    import CSUtils
     MenuText = "Cut Stock"
     ToolTip = "Produce and plan cut stock such as extrusions, tubes, planks and sheets."
-    Icon = os.path.join(icon_path, "CSLogo.svg")
+    Icon = CSUtils.resource("Icons", "CSLogo.svg")
 
     def Initialize(self):
-        self.list = ["TwoByFour"]
+        self.list = ["Plank"]
         self.appendToolbar("Cut Stock Commands", self.list)
 
     def Activated(self):
@@ -55,5 +57,5 @@ class CutStockWorkbench(Workbench):
     def GetClassName(self):
         return "Gui::PythonWorkbench"
 
-Gui.addWorkbench(CutStockWorkbench())
 
+Gui.addWorkbench(CutStockWorkbench())

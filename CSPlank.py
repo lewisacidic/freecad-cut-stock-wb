@@ -1,9 +1,13 @@
+"""Planks."""
 import Part
 
-class TwoByFour:
+
+class Plank:
+    """Proxy for a plank."""
+
     def __init__(self, obj):
         obj.addProperty(
-            "App::PropertyLength", "Length", "2x4", "Length of the box"
+            "App::PropertyLength", "Length", "Plank", "Length of the plank"
         ).Length = 2400.0
         obj.Proxy = self
 
