@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 """Base of CutStock workbench."""
-import CSUtils
 
 import FreeCAD
 from FreeCAD import Gui
-from FreeCAD.Gui import Workbench
+from FreeCADGui import Workbench
 
 
-class PlankCmd:
+class Cut1DCmd:
     """Create a Plank."""
 
     def GetResources(self):
+        import CSUtils
         return {
             "Pixmap": CSUtils.resource("Icon", "CSPlank.svg"),
             "MenuText": "Create a Plank",
@@ -18,10 +18,10 @@ class PlankCmd:
         }
 
     def Activated(self):
-        import CSPlank
+        import CSCut1D
 
-        a = FreeCAD.ActiveDocument.addObject("Part::FeaturePython", "Plank")
-        CSPlank.Plank(a)
+        a = FreeCAD.ActiveDocument.addObject("Part::FeaturePython", "CSCut1D")
+        CSCut1D.Cut1D(a)
         a.ViewObject.Proxy = 0
         FreeCAD.ActiveDocument.recompute()
         return
@@ -29,8 +29,7 @@ class PlankCmd:
     def IsActive(self):
         return Gui.ActiveDocument is not None
 
-
-Gui.addCommand("Plank", PlankCmd())
+Gui.addCommand("Cut1D", Cut1DCmd())
 
 
 class CutStockWorkbench(Workbench):
@@ -42,7 +41,7 @@ class CutStockWorkbench(Workbench):
     Icon = CSUtils.resource("Icons", "CSLogo.svg")
 
     def Initialize(self):
-        self.list = ["Plank"]
+        self.list = ["Cut1D"]
         self.appendToolbar("Cut Stock Commands", self.list)
 
     def Activated(self):
