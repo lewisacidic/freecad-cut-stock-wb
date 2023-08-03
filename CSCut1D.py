@@ -120,15 +120,6 @@ class Cut1D:
             waste = waste.transformGeometry(mat)
             obj = obj.cut(waste)
 
-        if fp.MitreEnd:
-            z_max = abs(y_len * math.tan(fp.MitreEnd * math.pi / 180))
-            waste = Part.makeWedge(x_min, y_min, 0, 0, x_min, x_max, y_max, z_max, 0, x_max)
-            mat = App.Matrix()
-            mat.scale(1, -1 if fp.MitreStart < 0 else 1, -1)
-            mat.move(0, 0, fp.Length)
-            waste = waste.transformGeometry(mat)
-            obj = obj.cut(waste)
-
         if fp.BevelStart:
             z_max = abs(x_len * math.tan(fp.BevelStart * math.pi / 180))
             waste = Part.makeWedge(y_min, x_min, 0, 0, y_min, y_max, x_max, z_max, 0, y_max)
@@ -138,12 +129,21 @@ class Cut1D:
             waste = waste.transformGeometry(mat)
             obj = obj.cut(waste)
 
+        if fp.MitreEnd:
+            z_max = abs(y_len * math.tan(fp.MitreEnd * math.pi / 180))
+            waste = Part.makeWedge(x_min, y_min, 0, 0, x_min, x_max, y_max, z_max, 0, x_max)
+            mat = App.Matrix()
+            mat.scale(1, -1 if fp.MitreEnd < 0 else 1, -1)
+            mat.move(0, 0, fp.Length)
+            waste = waste.transformGeometry(mat)
+            obj = obj.cut(waste)
+
         if fp.BevelEnd:
             z_max = abs(x_len * math.tan(fp.BevelEnd * math.pi / 180))
             waste = Part.makeWedge(y_min, x_min, 0, 0, y_min, y_max, x_max, z_max, 0, y_max)
             mat = App.Matrix()
             mat.rotateZ(0.5 * math.pi)
-            mat.scale(-1, -1 if fp.BevelStart < 0 else 1, -1)
+            mat.scale(-1, -1 if fp.BevelEnd < 0 else 1, -1)
             mat.move(0, 0, fp.Length)
             waste = waste.transformGeometry(mat)
             obj = obj.cut(waste)
