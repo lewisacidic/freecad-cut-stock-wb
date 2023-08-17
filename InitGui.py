@@ -11,11 +11,12 @@ class CutStockWorkbench(Workbench):
     import CSUtils
     MenuText = "Cut Stock"
     ToolTip = "Produce and plan cut stock such as extrusions, tubes, planks and sheets."
-    Icon = CSUtils.resource("Icons", "CSLogo.svg")
+    Icon = CSUtils.icon("CSLogo.svg")
 
     def Initialize(self):
         import CSCommands
-        self.list = ["Cut1D"]
+        CSCommands.register_commands()
+        self.list = ["CSTwoByTwo", "CSTwoByThree", "CSTwoByFour", "CSBoard"]
         self.appendToolbar("Cut Stock Commands", self.list)
 
     def Activated(self):
