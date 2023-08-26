@@ -1,35 +1,19 @@
 #!/usr/bin/env python
-"""Base of CutStock workbench."""
+# -*- coding: utf-8 -*-
+#
+# (c) 2023 Rich Lewis <@lewisacidic, opensource@rpil.io>
+# MIT License
+"""Bootstrap the Cut Stock Workbench."""
 
-from FreeCAD import Gui
-from FreeCADGui import Workbench
+from FreeCAD import Console
 
+def setup():
+    from cutstock_wb.workbench import CutStockWorkbench
 
-class CutStockWorkbench(Workbench):
-    """The cut stock workbench."""
+    wb = CutStockWorkbench()
+    wb.register()
 
-    import CSUtils
-    MenuText = "Cut Stock"
-    ToolTip = "Produce and plan cut stock such as extrusions, tubes, planks and sheets."
-    Icon = CSUtils.icon("CSLogo.svg")
+if __name__ == "__main__":
+    Console.PrintMessage("Initializing Cut Stock Workbench\n")
+    setup()
 
-    def Initialize(self):
-        import CSCommands
-        CSCommands.register_commands()
-        self.list = ["CSTwoByTwo", "CSTwoByThree", "CSTwoByFour", "CSBoard"]
-        self.appendToolbar("Cut Stock Commands", self.list)
-
-    def Activated(self):
-        return
-
-    def Deactivated(self):
-        return
-
-    def ContextMenu(self, recipient):
-        self.appendContextMenu("Cut stock", self.list)
-
-    def GetClassName(self):
-        return "Gui::PythonWorkbench"
-
-
-Gui.addWorkbench(CutStockWorkbench())
